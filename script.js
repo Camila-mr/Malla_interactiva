@@ -1,38 +1,41 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const checkboxes = document.querySelectorAll(".ramo input[type='checkbox']");
+  const ramos = document.querySelectorAll(".ramo");
 
   // Cargar estado desde localStorage
-  checkboxes.forEach((checkbox) => {
-    const codigo = checkbox.closest(".ramo").dataset.codigo;
-    checkbox.checked = localStorage.getItem(codigo) === "true";
+  ramos.forEach(ramo => {
+    const checkbox = ramo.querySelector("input[type='checkbox']");
+    const codigo = ramo.dataset.codigo;
+    const guardado = localStorage.getItem(codigo);
+    if (guardado === "true") checkbox.checked = true;
   });
 
-  // Aplicar lógica de prerrequisitos
-  function actualizarBloqueos() {
-    checkboxes.forEach((checkbox) => {
-      const ramo = checkbox.closest(".ramo");
-      const prereq = ramo.dataset.prerreq;
+  function actualizarEstado() {
+    ramos.forEach(ramo => {
+      const checkbox = ramo.querySelector("input[type='checkbox']");
       const codigo = ramo.dataset.codigo;
+      localStorage.setItem(codigo, checkbox.checked);
 
-      if (!prereq) {
-        checkbox.disabled = false; // sin prerrequisitos
-      } else {
-        const prereqCheckbox = document.querySelector(
-          `.ramo[data-codigo='${prereq}'] input[type='checkbox']`
-        );
-        checkbox.disabled = !prereqCheckbox.checked;
+      const prerreq = ramo.dataset.prerreq;
+      if (prerreq) {
+        const requisitos = prerreq.split(",");
+        const todosAprobados = requisitos.every(req => {
+          const prereqRamo = document.querySelector(`.ramo[data-codigo='${req.trim()}'] input[type='checkbox']`);
+          return prereqRamo && prereqRamo.checked;
+        });
+        checkbox.disabled = !todosAprobados;
+        if (!todosAprobados) checkbox.checked = false;
       }
     });
   }
 
-  // Guardar estado y actualizar cuando se cambia algo
-  checkboxes.forEach((checkbox) => {
+  // Inicializar estado
+  actualizarEstado();
+
+  // Escuchar cambios
+  ramos.forEach(ramo => {
+    const checkbox = ramo.querySelector("input[type='checkbox']");
     checkbox.addEventListener("change", () => {
-      const codigo = checkbox.closest(".ramo").dataset.codigo;
-      localStorage.setItem(codigo, checkbox.checked);
-      actualizarBloqueos();
+      actualizarEstado();
     });
   });
-
-  actualizarBloqueos(); // Aplicar bloqueo inicial
 });
