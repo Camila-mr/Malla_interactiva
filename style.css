@@ -1,56 +1,48 @@
 body {
-  font-family: "Segoe UI", sans-serif;
-  margin: 0;
-  padding: 0;
+  font-family: Arial, sans-serif;
   background-color: #fff0f5;
   color: #333;
+  text-align: center;
 }
 
 h1 {
-  text-align: center;
-  padding: 20px;
   color: #c71585;
 }
 
 .malla {
   display: flex;
-  flex-direction: row;
+  flex-wrap: nowrap;
   overflow-x: auto;
   padding: 20px;
-  gap: 20px;
+  gap: 30px;
+  justify-content: start;
 }
 
 .semestre {
-  min-width: 250px;
-  background-color: #ffe4ec;
-  border-radius: 15px;
-  padding: 15px;
-  box-shadow: 0 0 10px rgba(199, 21, 133, 0.2);
-  flex-shrink: 0;
-}
-
-.semestre h2 {
-  text-align: center;
-  color: #c71585;
-  font-size: 1.2em;
-  margin-bottom: 10px;
+  min-width: 220px;
+  border: 2px solid #c71585;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #ffe6f0;
 }
 
 .ramo {
-  background-color: #fff;
-  border: 2px solid #ffc0cb;
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 10px;
-  text-align: center;
-  transition: background-color 0.2s ease;
-}
-
-.ramo:hover {
-  background-color: #ffe4f0;
+  background-color: #ffc0cb;
+  margin: 5px 0;
+  padding: 6px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease;
 }
 
 .ramo input[type="checkbox"] {
-  margin-top: 8px;
-  transform: scale(1.2);
+  margin-top: 5px;
+}
+
+/* Estado bloqueado visual */
+.ramo.bloqueado {
+  background-color: #ddd;
+  color: #888;
+  cursor: not-allowed;
 }
