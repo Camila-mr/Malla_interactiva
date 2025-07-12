@@ -1,19 +1,32 @@
-document.querySelectorAll(".ramo input[type='checkbox']").forEach(checkbox => {
-  checkbox.addEventListener("change", () => {
-    actualizarEstadoRamos();
+document.addEventListener("DOMContentLoaded", () => {
+  const checkboxes = document.querySelectorAll(".ramo input[type='checkbox']");
+
+  // Al marcar o desmarcar, actualiza la habilitación de todos los ramos
+  checkboxes.forEach(cb => {
+    cb.addEventListener("change", actualizarEstadoRamos);
   });
+
+  actualizarEstadoRamos();
 });
 
 function actualizarEstadoRamos() {
-  document.querySelectorAll(".ramo").forEach(ramo => {
-    const prerreq = ramo.dataset.prerreq;
+  const ramos = document.querySelectorAll(".ramo");
+
+  ramos.forEach(ramo => {
     const checkbox = ramo.querySelector("input[type='checkbox']");
+    const prerreqs = ramo.dataset.prerreq?.split(",").filter(Boolean) || [];
 
-    if (!prerreq) return; // no tiene prerrequisitos
+    if (prerreqs.length === 0) {
+      checkbox.disabled = false;
+      return;
+    }
 
-    const prereqCheckbox = document.querySelector(`.ramo[data-codigo='${prerreq}'] input`);
-    checkbox.disabled = !prereqCheckbox.checked;
+    // Habilita el ramo solo si todos sus prerrequisitos están marcados
+    const todosAprobados = prerreqs.every(codigo => {
+      const prereqCheckbox = document.querySelector(`.ramo[data-codigo="${codigo}"] input`);
+      return prereqCheckbox?.checked;
+    });
+
+    checkbox.disabled = !todosAprobados;
   });
 }
-
-actualizarEstadoRamos(); // al cargar la página
