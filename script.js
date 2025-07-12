@@ -1,17 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
   const ramos = document.querySelectorAll(".ramo");
 
-  // Cargar estado guardado en localStorage
+  // Cargar estado guardado
   ramos.forEach(ramo => {
     const checkbox = ramo.querySelector("input[type='checkbox']");
     const codigo = ramo.dataset.codigo;
     const estado = localStorage.getItem(codigo);
-    if (estado === "true") {
-      checkbox.checked = true;
-    }
+    checkbox.checked = estado === "true";
   });
 
-  // Función para activar o bloquear según prerrequisitos
   function actualizarEstado() {
     ramos.forEach(ramo => {
       const checkbox = ramo.querySelector("input[type='checkbox']");
@@ -20,29 +17,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (prerreq) {
         const codigos = prerreq.split(",").map(c => c.trim());
-        const todosAprobados = codigos.every(req => {
-          const reqRamo = document.querySelector(`.ramo[data-codigo='${req}'] input[type='checkbox']`);
-          return reqRamo && reqRamo.checked;
+        const cumplidos = codigos.every(req => {
+          const reqCheckbox = document.querySelector(`.ramo[data-codigo='${req}'] input[type='checkbox']`);
+          return reqCheckbox && reqCheckbox.checked;
         });
 
-        checkbox.disabled = !todosAprobados;
-        if (!todosAprobados) checkbox.checked = false;
+        checkbox.disabled = !cumplidos;
+        ramo.classList.toggle("bloqueado", !cumplidos);
       } else {
-        checkbox.disabled = false; // si no tiene prerrequisitos, siempre habilitado
+        checkbox.disabled = false;
+        ramo.classList.remove("bloqueado");
       }
 
-      // Guardar estado
       localStorage.setItem(codigo, checkbox.checked);
     });
   }
 
-  // Ejecutar al inicio
   actualizarEstado();
 
-  // Reaccionar a cambios
   ramos.forEach(ramo => {
     const checkbox = ramo.querySelector("input[type='checkbox']");
     checkbox.addEventListener("change", () => {
+      localStorage.setItem(ramo.dataset.codigo, checkbox.checked);
       actualizarEstado();
     });
   });
