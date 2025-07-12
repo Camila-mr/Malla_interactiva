@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Malla Curricular Interactiva</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <h1>Malla Curricular Interactiva</h1>
+  <div class="malla">
+    <div class="ramo" data-codigo="MAT1191" data-prerreq="">
+      Álgebra
+      <input type="checkbox" />
+    </div>
+    <div class="ramo" data-codigo="MAT1192" data-prerreq="MAT1191">
+      Cálculo I
+      <input type="checkbox" disabled />
+    </div>
+    <div class="ramo" data-codigo="MAT1193" data-prerreq="MAT1192">
+      Álgebra Lineal
+      <input type="checkbox" disabled />
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
