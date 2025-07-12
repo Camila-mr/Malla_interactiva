@@ -8,24 +8,39 @@ body {
 h1 {
   text-align: center;
   color: #cc0066;
+  margin-bottom: 3rem;
+}
+
+.malla {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  overflow-x: auto;
+  padding-bottom: 2rem;
 }
 
 .semestre {
-  margin-bottom: 2rem;
+  min-width: 300px;
+  flex-shrink: 0;
+  background-color: #ffffffcc;
+  border: 2px dashed #ff66a3;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(255, 0, 102, 0.2);
 }
 
 .semestre h2 {
   text-align: center;
   color: #d63384;
+  margin-bottom: 1rem;
 }
 
 .ramo {
   background-color: #fff0f5;
   border: 1px solid #ff99cc;
   border-radius: 12px;
-  padding: 1rem;
-  margin: 0.5rem auto;
-  width: 300px;
+  padding: 0.5rem;
+  margin-bottom: 0.8rem;
   text-align: center;
   box-shadow: 0 2px 6px rgba(204, 0, 102, 0.2);
 }
