@@ -28,10 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Inicializar estado
   actualizarEstado();
 
-  // Escuchar cambios
   ramos.forEach(ramo => {
     const checkbox = ramo.querySelector("input[type='checkbox']");
     checkbox.addEventListener("change", () => {
