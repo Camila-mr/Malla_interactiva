@@ -24,7 +24,7 @@ function actualizarEstadoRamos() {
       const prereqCheckbox = document.querySelector(`.ramo[data-codigo="${codigo}"] input`);
       return prereqCheckbox?.checked;
     });
-
+    
     checkbox.disabled = !todosAprobados;
   });
 }
